@@ -2,7 +2,6 @@ package com.project.p6.resource;
 
 import com.project.p6.persistance.Student;
 import com.project.p6.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
