@@ -23,13 +23,23 @@ public class StudentResource {
         return this.studentService.getAll();
     }
 
+    @GetMapping(value = "/students/{year}")
+    public List<Student> getStudentsByYear(@PathVariable int year) { return this.studentService.getByYear(year);}
+
     @GetMapping(value = "/student/{id}")
     public Student getById(@PathVariable long id){
         return this.studentService.getById(id);
     }
 
-    @PostMapping(value = "/student/")
+    @PostMapping(value = "/student")
     public Student addStudent(Student student) {
+        return this.studentService.add(student);
+    }
+
+    @PostMapping(value = "/student/{year}")
+    public Student addStudent(@PathVariable long year) {
+        Student student = new Student();
+        student.setYear(year);
         return this.studentService.add(student);
     }
 

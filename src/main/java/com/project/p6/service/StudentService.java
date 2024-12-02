@@ -25,6 +25,8 @@ public class StudentService {
         return this.studentRepository.findById(id).get();
     }
 
+    public List<Student> getByYear(long year) { return this.studentRepository.findAllByYear(year);}
+
     public Student add(Student student) {
         return this.studentRepository.save(student);
     }
