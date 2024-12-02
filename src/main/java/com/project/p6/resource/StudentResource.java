@@ -2,19 +2,23 @@ package com.project.p6.resource;
 
 import com.project.p6.persistance.Student;
 import com.project.p6.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
+@RequestMapping(value = "/database")
 public class StudentResource {
+
     StudentService studentService;
 
     public StudentResource(StudentService studentService) {
         this.studentService = studentService;
     }
 
-    @GetMapping(value = "student")
+    @GetMapping(value = "/student")
     public List<Student> getAllStudents() {
         return this.studentService.getAll();
     }
