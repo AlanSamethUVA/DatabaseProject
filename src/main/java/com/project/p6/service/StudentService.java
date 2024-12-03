@@ -18,10 +18,12 @@ public class StudentService {
     }
 
     public List<Student> getAll() {
+
         return studentRepository.findAll();
     }
 
     public Student getById(long id) {
+
         return this.studentRepository.findById(id).get();
     }
 

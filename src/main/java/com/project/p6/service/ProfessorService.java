@@ -5,6 +5,7 @@ import com.project.p6.persistance.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfessorService {
@@ -15,11 +16,11 @@ public class ProfessorService {
         this.professorRepository = professorRepository;
     }
 
-    public List<Professor> getAllProfessors() {
-        return this.professorRepository.findAll();
+    public List<Professor> getAll() {
+        return professorRepository.findAll();
     }
 
-    public Professor getById(int id) {
+    public Professor getById(long id) {
         return this.professorRepository.findById(id).get();
     }
 
@@ -31,19 +32,16 @@ public class ProfessorService {
         return this.professorRepository.save(professor);
     }
 
-    public Professor update(int id, Professor professor) {
-        if (professorRepository.existsById(id)) {
-            professor.setId(id);
-            return professorRepository.save(professor);
+    public Professor update(long id, Professor professor) {
+        Optional<Professor> professorOptional = this.professorRepository.findById(id);
+        if (professorOptional.isPresent()) {
+            professorOptional.get().setContact(professor.getContact());
+            return this.professorRepository.save(professorOptional.get());
         }
-        return null;
+        throw new RuntimeException();
     }
 
-    public boolean deleteProfessor(int id) {
-        if (professorRepository.existsById(id)) {
-            professorRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void delete(long id) {
+        this.professorRepository.deleteById(id);
     }
 }

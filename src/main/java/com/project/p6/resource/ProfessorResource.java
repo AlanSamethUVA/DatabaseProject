@@ -19,11 +19,11 @@ public class ProfessorResource {
 
     @GetMapping(value = "/professor")
     public List<Professor> getAllProfessors() {
-        return professorService.getAllProfessors();
+        return professorService.getAll();
     }
 
     @GetMapping(value ="/professor/{id}")
-    public Professor getProfessorById(@PathVariable int id) {
+    public Professor getProfessorById(@PathVariable long id) {
         return this.professorService.getById(id);
     }
 
@@ -42,7 +42,7 @@ public class ProfessorResource {
     }
 
     @PutMapping(value ="/professor/{id}/{hours}")
-    public Professor updateProfessorHours(@PathVariable int id, @PathVariable String hours) {
+    public Professor updateProfessorHours(@PathVariable long id, @PathVariable String hours) {
         Professor updatedProfessor = this.professorService.getById(id);
         updatedProfessor.setHours(hours);
         return this.professorService.update(id, updatedProfessor);
@@ -50,8 +50,8 @@ public class ProfessorResource {
     }
 
     @DeleteMapping(value ="/professor/{id}")
-    public boolean deleteProfessor(@PathVariable int id) {
-        return this.professorService.deleteProfessor(id);
+    public void deleteProfessor(@PathVariable long id) {
+        this.professorService.delete(id);
     }
 }
 
