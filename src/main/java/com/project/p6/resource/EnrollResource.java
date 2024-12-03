@@ -37,9 +37,20 @@ public class EnrollResource {
         return this.enrollService.getBySemester(semester);
     }
 
-    @PostMapping(value = "/enroll")
-    public Enroll addEnrollment(@RequestBody Enroll enroll) {
+    @PostMapping(value = "/enroll/{studId}/{courseId}/{semester}")
+    public Enroll addEnrollment(@PathVariable long studId, @PathVariable long courseId, @PathVariable String semester) {
+        Enroll enroll = new Enroll();
+        enroll.setStudentId(studId);
+        enroll.setCourseId(courseId);
+        enroll.setSemester(semester);
         return this.enrollService.add(enroll);
+    }
+
+    @PutMapping(value ="enroll/{id}/{course}")
+    public Enroll updateEnrollment(@PathVariable long id, @PathVariable long course) {
+        Enroll enroll = this.enrollService.getById(id);
+        enroll.setId(id);
+        return this.enrollService.updateCourse(enroll, id);
     }
 
     @DeleteMapping(value = "/enroll/{id}")
