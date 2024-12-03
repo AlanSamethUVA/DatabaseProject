@@ -11,7 +11,6 @@ import lombok.Data;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 
     private long department; //FOREIGN KEY
