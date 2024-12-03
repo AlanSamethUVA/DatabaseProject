@@ -1,55 +1,23 @@
 package com.project.p6.persistance;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name = "Professors")
 public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int professorId;
+    private int id;
 
-    @Column(name = "professor_name", nullable = false, length = 100)
-    private String professorName;
+    private String name;
 
-    @Column(name = "professor_contact", nullable = false, length = 100)
-    private String professorContact;
+    private String contact;
 
-    @Column(name = "office_hours", length = 100)
-    private String officeHours;
-
-    // Getters and Setters
-    public int getProfessorId() {
-        return professorId;
-    }
-
-    public void setProfessorId(int professorId) {
-        this.professorId = professorId;
-    }
-
-    public String getProfessorName() {
-        return professorName;
-    }
-
-    public void setProfessorName(String professorName) {
-        this.professorName = professorName;
-    }
-
-    public String getProfessorContact() {
-        return professorContact;
-    }
-
-    public void setProfessorContact(String professorContact) {
-        this.professorContact = professorContact;
-    }
-
-    public String getOfficeHours() {
-        return officeHours;
-    }
-
-    public void setOfficeHours(String officeHours) {
-        this.officeHours = officeHours;
-    }
+    private String hours;
 }
 //com

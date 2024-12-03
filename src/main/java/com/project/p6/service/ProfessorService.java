@@ -9,27 +9,31 @@ import java.util.List;
 @Service
 public class ProfessorService {
 
-    private final ProfessorRepository professorRepository;
+    ProfessorRepository professorRepository;
 
     public ProfessorService(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }
 
     public List<Professor> getAllProfessors() {
-        return professorRepository.findAll();
+        return this.professorRepository.findAll();
     }
 
-    public Professor getProfessorById(int id) {
-        return professorRepository.findById(id).orElse(null);
+    public Professor getById(int id) {
+        return this.professorRepository.findById(id).get();
     }
 
-    public Professor createProfessor(Professor professor) {
-        return professorRepository.save(professor);
+    public Professor getByProfessorName(String name) {
+        return this.professorRepository.findByName(name);
     }
 
-    public Professor updateProfessor(int id, Professor professor) {
+    public Professor add(Professor professor) {
+        return this.professorRepository.save(professor);
+    }
+
+    public Professor update(int id, Professor professor) {
         if (professorRepository.existsById(id)) {
-            professor.setProfessorId(id);
+            professor.setId(id);
             return professorRepository.save(professor);
         }
         return null;
@@ -43,4 +47,3 @@ public class ProfessorService {
         return false;
     }
 }
-//com

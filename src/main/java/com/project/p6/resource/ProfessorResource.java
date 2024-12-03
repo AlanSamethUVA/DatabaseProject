@@ -2,52 +2,56 @@ package com.project.p6.resource;
 
 import com.project.p6.persistance.Professor;
 import com.project.p6.service.ProfessorService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api/professors")
+@RequestMapping(value ="/database")
 public class ProfessorResource {
 
-    private final ProfessorService professorService;
+    ProfessorService professorService;
 
     public ProfessorResource(ProfessorService professorService) {
         this.professorService = professorService;
     }
 
-    @GetMapping
+    @GetMapping(value = "/professor")
     public List<Professor> getAllProfessors() {
         return professorService.getAllProfessors();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Professor> getProfessorById(@PathVariable int id) {
-        Professor professor = professorService.getProfessorById(id);
-        return professor != null ? ResponseEntity.ok(professor) : ResponseEntity.notFound().build();
+    @GetMapping(value ="/professor/{id}")
+    public Professor getProfessorById(@PathVariable int id) {
+        return this.professorService.getById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Professor> createProfessor(@RequestBody Professor professor) {
-        Professor savedProfessor = professorService.createProfessor(professor);
-        return ResponseEntity.ok(savedProfessor);
+    @GetMapping(value ="/professors/{name}")
+    public Professor getProfessorByName(@PathVariable String name) {
+        return this.professorService.getByProfessorName(name);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Professor> updateProfessor(@PathVariable int id, @RequestBody Professor professor) {
-        Professor updatedProfessor = professorService.updateProfessor(id, professor);
-        return updatedProfessor != null ? ResponseEntity.ok(updatedProfessor) : ResponseEntity.notFound().build();
+    @PostMapping(value = "/professor/{name}/{contact}/{hours}")
+    public Professor createProfessor(@PathVariable String name, @PathVariable String contact, @PathVariable String hours) {
+        Professor savedProfessor = new Professor();
+        savedProfessor.setName(name);
+        savedProfessor.setContact(contact);
+        savedProfessor.setHours(hours);
+        return this.professorService.add(savedProfessor);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProfessor(@PathVariable int id) {
-        if (professorService.deleteProfessor(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping(value ="/professor/{id}/{hours}")
+    public Professor updateProfessorHours(@PathVariable int id, @PathVariable String hours) {
+        Professor updatedProfessor = this.professorService.getById(id);
+        updatedProfessor.setHours(hours);
+        return this.professorService.update(id, updatedProfessor);
+
+    }
+
+    @DeleteMapping(value ="/professor/{id}")
+    public boolean deleteProfessor(@PathVariable int id) {
+        return this.professorService.deleteProfessor(id);
     }
 }
 
-//com
