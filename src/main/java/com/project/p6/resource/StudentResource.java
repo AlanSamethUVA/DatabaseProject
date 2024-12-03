@@ -42,8 +42,10 @@ public class StudentResource {
         return this.studentService.add(student);
     }
 
-    @PutMapping(value = "/student/{id}")
-    public Student updateStudent(@PathVariable long id, @RequestBody Student student) {
+    @PutMapping(value = "/student/{id}/{year}")
+    public Student updateStudent(@PathVariable long id, @PathVariable long year) {
+        Student student = this.studentService.getById(id);
+        student.setYear(year);
         return this.studentService.update(student, id);
     }
 
